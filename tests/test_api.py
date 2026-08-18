@@ -8,6 +8,7 @@ from fastapi import FastAPI, WebSocketDisconnect
 from fastapi.testclient import TestClient
 
 from terminal import api
+from terminal.view import DEFAULT_FONT_SIZE, DEFAULT_SCROLLBACK
 
 
 def _app(cfg=None):
@@ -63,8 +64,8 @@ def test_view_invalid_render_settings_fall_back_to_defaults():
 
     body = c.get("/plugins/terminal/view").text
 
-    assert "fontSize: 13" in body
-    assert "scrollback: 5000" in body
+    assert f"fontSize: {DEFAULT_FONT_SIZE}" in body
+    assert f"scrollback: {DEFAULT_SCROLLBACK}" in body
 
 
 def test_vendored_assets_served_locally():
