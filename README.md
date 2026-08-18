@@ -63,10 +63,13 @@ runtime-status without a console rebuild (#853). No restart.
 Or from the CLI against a running server:
 
 ```bash
-python -m server plugin install https://github.com/protoLabsAI/terminal-plugin --ref v0.1.1
-# then pick it up live: hit "Sync" in the console Plugins panel, or have the agent call
-# reload_plugins (plugin-devkit). It hot-mounts — no restart.
+python -m server plugin install https://github.com/protoLabsAI/terminal-plugin --ref v0.4.1
 ```
+
+The CLI is fetch-only and does not add `terminal` to `plugins.enabled`; its generic
+output therefore says `NOT enabled`. Terminal's manifest is enabled by default, so
+the next server start—or **Sync** in the running console Plugins panel—discovers and
+loads it unless `terminal` is listed under `plugins.disabled`.
 
 Optional config in `config/langgraph-config.yaml` (all have sane defaults):
 

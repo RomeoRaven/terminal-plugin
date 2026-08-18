@@ -30,11 +30,13 @@ def test_manifest_and_pyproject_versions_agree():
     assert m["version"] == pp["project"]["version"]
 
 
-def test_view_path_is_public_and_base_safe():
-    view = _manifest()["views"][0]
+def test_view_path_and_assets_are_public_and_base_safe():
+    manifest = _manifest()
+    view = manifest["views"][0]
     assert view["id"] == "terminal"
     assert view["path"] == "/plugins/terminal/view"  # public, not /api/plugins/…
     assert view["path"].split("/plugins/")[0] == ""
+    assert "/plugins/terminal/static/" in manifest["public_paths"]
 
 
 def test_view_page_pulls_in_the_protoagent_theme_and_four_rules():

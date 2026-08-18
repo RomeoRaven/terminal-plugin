@@ -36,6 +36,11 @@ config:
 views:
   - { id: terminal, label: "Terminal", icon: SquareTerminal, path: /plugins/terminal/view }
 
+# Browser-loaded vendored assets cannot carry an Authorization header. The route
+# itself serves only the exact filenames allowlisted in api.py.
+public_paths:
+  - "/plugins/terminal/static/"
+
 # Declarative transparency (surfaced in the console; not enforced).
 capabilities:
   network: []                     # none — xterm.js + addons are VENDORED + served locally (offline)

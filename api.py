@@ -23,7 +23,7 @@ from pathlib import Path
 from fastapi import WebSocket  # module-level so the websocket route's annotation resolves
 
 from .pty_session import open_session
-from .view import PAGE
+from .view import render_page
 
 log = logging.getLogger("protoagent.plugins.terminal")
 
@@ -74,9 +74,17 @@ def build_router(cfg: dict):
     shell = (cfg or {}).get("shell") or ""
     cwd = (cfg or {}).get("cwd") or ""
 
+    def _int_setting(name: str, default: int) -> int:
+        try:
+            return int((cfg or {}).get(name, default))
+        except (TypeError, ValueError):
+            return default
+
+    page = render_page(font_size=_int_setting("font_size", 13), scrollback=_int_setting("scrollback", 5000))
+
     @router.get("/view", response_class=HTMLResponse)
     async def _view():
-        return HTMLResponse(PAGE)
+        return HTMLResponse(page)
 
     @router.get("/static/{name}")
     async def _static(name: str):

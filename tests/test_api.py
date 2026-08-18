@@ -49,6 +49,15 @@ def test_view_served_on_the_public_path():
     assert r.status_code == 200 and "xterm" in r.text.lower()
 
 
+def test_view_applies_configured_font_size_and_scrollback():
+    c = TestClient(_app({"shell": "/bin/cat", "font_size": 17, "scrollback": 1234}))
+
+    body = c.get("/plugins/terminal/view").text
+
+    assert "fontSize: 17" in body
+    assert "scrollback: 1234" in body
+
+
 def test_vendored_assets_served_locally():
     c = TestClient(_app())
     js = c.get("/plugins/terminal/static/xterm.js")

@@ -20,7 +20,7 @@ No build step — vanilla JS; xterm.js + addons are VENDORED and served by this 
 
 from __future__ import annotations
 
-PAGE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+PAGE_TEMPLATE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terminal</title>
 <script>
@@ -193,7 +193,7 @@ function newSession(){
   const id = "t" + (++counter);
   const el = document.createElement("div"); el.className = "termpane"; el.dataset.id = id; $("terms").appendChild(el);
   const term = new Terminal({
-    cursorBlink: true, fontSize: 13, scrollback: 5000, allowProposedApi: true,
+    cursorBlink: true, fontSize: __FONT_SIZE__, scrollback: __SCROLLBACK__, allowProposedApi: true,
     fontFamily: MONO,
     lineHeight: 1.0,        // flush rows
     customGlyphs: true,     // draw block/box glyphs as exact cell-filling shapes (needs canvas/webgl)
@@ -233,3 +233,11 @@ function boot(){ if (booted) return; booted = true; applyTheme(); newSession(); 
 kit.initPluginView(() => { applyTheme(); boot(); });
 setTimeout(boot, 1000);
 </script></body></html>"""
+
+
+def render_page(*, font_size: int = 13, scrollback: int = 5000) -> str:
+    """Render validated integer terminal settings into the self-contained page."""
+    return PAGE_TEMPLATE.replace("__FONT_SIZE__", str(int(font_size))).replace("__SCROLLBACK__", str(int(scrollback)))
+
+
+PAGE = render_page()
