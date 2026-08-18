@@ -58,6 +58,15 @@ def test_view_applies_configured_font_size_and_scrollback():
     assert "scrollback: 1234" in body
 
 
+def test_view_invalid_render_settings_fall_back_to_defaults():
+    c = TestClient(_app({"shell": "/bin/cat", "font_size": "huge", "scrollback": None}))
+
+    body = c.get("/plugins/terminal/view").text
+
+    assert "fontSize: 13" in body
+    assert "scrollback: 5000" in body
+
+
 def test_vendored_assets_served_locally():
     c = TestClient(_app())
     js = c.get("/plugins/terminal/static/xterm.js")

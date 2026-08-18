@@ -21,6 +21,9 @@ api.py returns that rendered page on GET /view.
 
 from __future__ import annotations
 
+DEFAULT_FONT_SIZE = 13
+DEFAULT_SCROLLBACK = 5000
+
 PAGE_TEMPLATE = r"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terminal</title>
@@ -236,7 +239,7 @@ setTimeout(boot, 1000);
 </script></body></html>"""
 
 
-def render_page(*, font_size: int = 13, scrollback: int = 5000) -> str:
+def render_page(*, font_size: int = DEFAULT_FONT_SIZE, scrollback: int = DEFAULT_SCROLLBACK) -> str:
     """Render validated integer terminal settings into the self-contained page."""
     return PAGE_TEMPLATE.replace("__FONT_SIZE__", str(int(font_size))).replace("__SCROLLBACK__", str(int(scrollback)))
 

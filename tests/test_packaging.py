@@ -16,12 +16,16 @@ def _manifest():
 
 
 def test_manifest_shape():
+    from terminal.view import DEFAULT_FONT_SIZE, DEFAULT_SCROLLBACK
+
     m = _manifest()
     assert m["id"] == "terminal"
     assert m["enabled"] is True  # on by default — the WS bearer gate is the protection
     assert m["config_section"] == "terminal"
     for key in ("shell", "cwd"):
         assert key in m["config"]
+    assert m["config"]["font_size"] == DEFAULT_FONT_SIZE
+    assert m["config"]["scrollback"] == DEFAULT_SCROLLBACK
 
 
 def test_manifest_and_pyproject_versions_agree():
