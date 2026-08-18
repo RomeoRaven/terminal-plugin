@@ -15,7 +15,8 @@ foreground/cursor/selection + the 16 ANSI colours — and RE-APPLIES on a live r
 (a MutationObserver on :root), across all open tabs.
 
 No build step — vanilla JS; xterm.js + addons are VENDORED and served by this plugin
-(offline). ``PAGE`` is the HTML; api.py returns it on GET /view.
+(offline). ``PAGE_TEMPLATE`` is rendered with terminal settings by ``render_page``;
+api.py returns that rendered page on GET /view.
 """
 
 from __future__ import annotations
