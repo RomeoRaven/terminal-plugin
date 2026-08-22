@@ -63,8 +63,12 @@ runtime-status without a console rebuild (#853). No restart.
 Or from the CLI against a running server:
 
 ```bash
-python -m server plugin install https://github.com/protoLabsAI/terminal-plugin --ref v0.4.1
+python -m server plugin install https://github.com/protoLabsAI/terminal-plugin --ref main
 ```
+
+`v0.4.1` predates the bearer-authenticated static-asset fix in this branch. Until
+the maintainers publish a newer containing release, bearer-gated hosts must use
+`main`; after that release, pin its exact tag instead of following `main`.
 
 The CLI is fetch-only and does not add `terminal` to `plugins.enabled`; its generic
 output therefore says `NOT enabled`. Terminal's manifest is enabled by default, so

@@ -77,7 +77,7 @@ def build_router(cfg: dict):
     def _int_setting(name: str, default: int) -> int:
         try:
             return int((cfg or {}).get(name, default))
-        except (TypeError, ValueError):
+        except (TypeError, ValueError, OverflowError):
             return default
 
     page = render_page(

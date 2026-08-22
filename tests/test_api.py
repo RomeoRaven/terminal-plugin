@@ -68,6 +68,15 @@ def test_view_invalid_render_settings_fall_back_to_defaults():
     assert f"scrollback: {DEFAULT_SCROLLBACK}" in body
 
 
+def test_view_infinite_render_settings_fall_back_to_defaults():
+    c = TestClient(_app({"shell": "/bin/cat", "font_size": float("inf"), "scrollback": float("-inf")}))
+
+    body = c.get("/plugins/terminal/view").text
+
+    assert f"fontSize: {DEFAULT_FONT_SIZE}" in body
+    assert f"scrollback: {DEFAULT_SCROLLBACK}" in body
+
+
 def test_vendored_assets_served_locally():
     c = TestClient(_app())
     js = c.get("/plugins/terminal/static/xterm.js")
